@@ -1,0 +1,83 @@
+# =====================
+# Global
+# =====================
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo
+
+# =====================
+# IntelliJ / JetBrains
+# =====================
+.idea/
+*.iml
+out/
+*.ipr
+*.iws
+
+# =====================
+# Gradle
+# =====================
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# =====================
+# Java / Kotlin
+# =====================
+*.class
+*.jar
+*.war
+*.ear
+
+# =====================
+# Python (for games)
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+.eggs/
+
+# =====================
+# Game Assets
+# =====================
+# Ignore large binary assets you don’t want in Git (optional).
+# Comment these out if you DO want to track them.
+*.wav
+*.mp3
+*.ogg
+*.mp4
+*.avi
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.psd
+
+# =====================
+# OS Specific
+# =====================
+# macOS
+.AppleDouble
+.LSOverride
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Windows
+ehthumbs.db
+Desktop.ini
+
+# =====================
+# Scripts
+# =====================
+# compiled binaries from scripts (unlikely, but just in case)
+*.exe
+*.bat
