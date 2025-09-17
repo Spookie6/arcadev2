@@ -2,11 +2,13 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.spookie6.GameLoader
 import com.github.spookie6.InputHandler
+import com.github.spookie6.ProcessRunner
 import com.github.spookie6.scenes.StartScene
 
 class Arcade : Game() {
@@ -16,22 +18,28 @@ class Arcade : Game() {
     lateinit var viewport: FitViewport
     lateinit var shader: ShaderProgram
 
+    lateinit var font: BitmapFont
+
     val VIRTUAL_WIDTH = 320f
     val VIRTUAL_HEIGHT = 180f
 
     val gameLoader = GameLoader()
     val inputHandler = InputHandler(this)
+    val processRunner = ProcessRunner(this)
 
     override fun create() {
         batch = SpriteBatch()
+
+        backgroundTexture = Texture("images/arcade-background.png")
+        backgroundTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
+
+        font = BitmapFont()
 
         camera = OrthographicCamera()
         camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
         viewport = FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera)
 
-        backgroundTexture = Texture("images/arcade-background.png")
-        backgroundTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
-
+        gameLoader.loadGames()
         this.screen = StartScene(this)
 
         val vert = Gdx.files.internal("shaders/default.vert").readString()
@@ -46,8 +54,11 @@ class Arcade : Game() {
     override fun render() {
         inputHandler.handleInputs()
 
-        batch.shader = shader
-        shader.setUniformf("u_resolution", VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+        if (processRunner.process != null) return
+        if (screen is StartScene) {
+            batch.shader = shader
+            shader.setUniformf("u_resolution", VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+        }
         super.render()
         batch.shader = null
     }
