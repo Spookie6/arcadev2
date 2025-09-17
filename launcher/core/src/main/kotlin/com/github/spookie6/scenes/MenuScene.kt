@@ -5,10 +5,8 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
 
 class MenuScene(arcade: Arcade) : BaseScene(arcade) {
-//    private val card = Texture("images/game-card.png")
-
     override fun show() {
-        ;
+        background = arcade.assets.get("images/arcade-background.png", Texture::class.java)
     }
 
     override fun render(delta: Float) {
@@ -17,11 +15,10 @@ class MenuScene(arcade: Arcade) : BaseScene(arcade) {
         batch.projectionMatrix = camera.combined
 
         batch.begin()
-        batch.draw(arcade.backgroundTexture, 0f, 0f, viewport.worldWidth, viewport.worldHeight)
+        batch.draw(background, 0f, 0f, viewport.worldWidth, viewport.worldHeight)
         batch.end()
     }
 
     override fun dispose() {
-//        card.dispose()
     }
 }

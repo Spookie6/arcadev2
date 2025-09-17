@@ -3,6 +3,7 @@ package com.github.spookie6
 import Arcade
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.github.spookie6.scenes.GameLaunchScene
 import com.github.spookie6.scenes.MenuScene
 import com.github.spookie6.scenes.StartScene
 
@@ -26,7 +27,7 @@ class InputHandler(val arcade: Arcade) {
             }
             is MenuScene -> {
                 if (Gdx.input.isKeyPressed(Input.Keys.H)) {
-                    arcade.processRunner.runGame(arcade.gameLoader.loadedGames[0])
+                    arcade.screen = GameLaunchScene(arcade, arcade.gameLoader.loadedGames[0])
                 }
             }
         }

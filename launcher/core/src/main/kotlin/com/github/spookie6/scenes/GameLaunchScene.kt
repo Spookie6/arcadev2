@@ -35,14 +35,12 @@ class GameLaunchScene(
         }
         batch.end()
 
-        // If process is finished, return to menu
-        if (!arcade.processRunner.isRunning() && launched) {
-            arcade.screen = MenuScene(arcade)
+        if (arcade.processRunner.isRunning() && launched) {
+            arcade.rendering = false
         }
     }
 
-    override fun hide() {
-        // Resume rendering when back in menu
-        Gdx.graphics.setContinuousRendering(true)
+    override fun dispose() {
+        TODO("Not yet implemented")
     }
 }

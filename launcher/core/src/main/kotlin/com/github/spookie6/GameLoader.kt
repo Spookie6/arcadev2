@@ -2,6 +2,7 @@ package com.github.spookie6
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -31,6 +32,10 @@ class GameLoader {
         val basePath = Paths.get("").toAbsolutePath().parent
         val gamesPath = basePath.resolve("games")
 
+        if (!Files.exists(gamesPath)) {
+            throw FileNotFoundException("$gamesPath not found")
+        }
+
         Files.list(gamesPath).use { gameDirs ->
             gameDirs.filter { Files.isDirectory(it) }.forEach { dir ->
                 val metaFile = dir.resolve("metadata.json")
@@ -49,7 +54,7 @@ class GameLoader {
         println("Loaded games: $loadedGames")
     }
 
-    fun loadMetaData(path: Path): GameMetadata {
+    private fun loadMetaData(path: Path): GameMetadata {
         val content = Files.newBufferedReader(path).use { it.readText() }
         return json.decodeFromString<GameMetadata>(content)
     }

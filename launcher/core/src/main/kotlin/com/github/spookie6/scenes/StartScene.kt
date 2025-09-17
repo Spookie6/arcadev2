@@ -1,11 +1,12 @@
 package com.github.spookie6.scenes
 
 import Arcade
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.ScreenUtils
 
 class StartScene(arcade: Arcade) : BaseScene(arcade) {
     override fun show() {
-        // runs once when this screen becomes active
+        background = arcade.assets.get("images/arcade-background.png", Texture::class.java)
     }
 
     override fun render(delta: Float) {
@@ -14,7 +15,7 @@ class StartScene(arcade: Arcade) : BaseScene(arcade) {
         batch.projectionMatrix = camera.combined
 
         batch.begin()
-        batch.draw(arcade.backgroundTexture, 0f, 0f, viewport.worldWidth, viewport.worldHeight)
+        batch.draw(background, 0f, 0f, viewport.worldWidth, viewport.worldHeight)
         batch.end()
     }
 

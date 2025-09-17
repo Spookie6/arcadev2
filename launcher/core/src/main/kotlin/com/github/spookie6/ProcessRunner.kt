@@ -1,6 +1,8 @@
 package com.github.spookie6
 
 import Arcade
+import com.badlogic.gdx.Gdx
+import com.github.spookie6.scenes.MenuScene
 import java.io.File
 
 class ProcessRunner(val arcade: Arcade) {
@@ -21,19 +23,28 @@ class ProcessRunner(val arcade: Arcade) {
             process = pb.start()
 
             Thread {
-                val exitCode = process?.waitFor() ?: -1
-                println("${game.metadata.name} finished with exit code $exitCode")
-                process = null
+                try {
+                    val exitCode = process?.waitFor() ?: -1
+                    println("${game.metadata.name} finished with exit code $exitCode")
+                } finally {
+                    Gdx.app.postRunnable{ reset() }
+                }
             }.start()
         } catch (e: Exception) {
             e.printStackTrace()
-            process = null
+            reset()
         }
     }
 
     fun abortProcess() {
         process?.destroy()
+        reset()
+    }
+
+    private fun reset() {
         process = null
+        arcade.screen = MenuScene(arcade)
+        arcade.rendering = true
     }
 
     fun isRunning(): Boolean = process != null
