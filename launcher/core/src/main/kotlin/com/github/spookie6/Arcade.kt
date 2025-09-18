@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.github.spookie6.FontManager
 import com.github.spookie6.GameLoader
 import com.github.spookie6.InputHandler
 import com.github.spookie6.ProcessRunner
@@ -31,6 +32,7 @@ class Arcade : Game() {
     val processRunner = ProcessRunner(this)
 
     var rendering = true
+    var time = 0f
 
     override fun create() {
         batch = SpriteBatch()
@@ -46,7 +48,7 @@ class Arcade : Game() {
         this.setScreen(LoadingScene(this))
 
         val vert = Gdx.files.internal("shaders/default.vert").readString()
-        val frag = Gdx.files.internal("shaders/scanline.frag").readString()
+        val frag = Gdx.files.internal("shaders/retro_monitor.frag").readString()
         shader = ShaderProgram(vert, frag)
 
         if (!shader.isCompiled) {
@@ -55,14 +57,15 @@ class Arcade : Game() {
     }
 
     override fun render() {
+        time += Gdx.graphics.deltaTime
         inputHandler.handleInputs()
 
         if (!rendering) return
 
-        if (screen is StartScene) {
-            batch.shader = shader
-            shader.setUniformf("u_resolution", VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
-        }
+        batch.shader = shader
+        shader.setUniformf("u_time", time)
+        shader.setUniformf("u_resolution", VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+
         super.render()
         batch.shader = null
     }
@@ -71,5 +74,6 @@ class Arcade : Game() {
         batch.dispose()
         screen?.dispose()
         assets.dispose()
+        FontManager.dispose()
     }
 }

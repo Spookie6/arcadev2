@@ -3,6 +3,7 @@ package com.github.spookie6.scenes
 import Arcade
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.ScreenUtils
+import com.github.spookie6.FontManager
 import com.github.spookie6.GameLoader
 
 class GameLaunchScene(
@@ -31,7 +32,7 @@ class GameLaunchScene(
         batch.begin()
         // Example retro launching animation
         if (((launchTime * 2).toInt() % 2) == 0) {
-            arcade.font.draw(batch, "Launching ${game.metadata.name}...", 80f, 100f)
+            FontManager.getFont("fonts/8-bit-hud.ttf", 8).draw(batch, "Launching ${game.metadata.name}...", 80f, 100f)
         }
         batch.end()
 

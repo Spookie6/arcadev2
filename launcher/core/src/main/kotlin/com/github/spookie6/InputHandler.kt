@@ -8,7 +8,6 @@ import com.github.spookie6.scenes.MenuScene
 import com.github.spookie6.scenes.StartScene
 
 class InputHandler(val arcade: Arcade) {
-
     fun handleInputs() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             if (arcade.processRunner.isRunning()) {
@@ -21,7 +20,7 @@ class InputHandler(val arcade: Arcade) {
         if (arcade.processRunner.isRunning()) return
         when (arcade.screen) {
             is StartScene -> {
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) && !Gdx.input.isKeyPressed(Input.Keys.H)) {
                     arcade.screen = MenuScene(arcade)
                 }
             }
